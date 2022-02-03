@@ -1,27 +1,32 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import Pokemon from "~/components/Pokemon";
-import {Flex, Text, Button} from "@chakra-ui/react";
+import { Flex, Text, Button } from "@chakra-ui/react";
 
-const Types = ({types, pokemon, setMistakes}) => {
+const Types = ({ types, pokemon, setMistakes }) => {
   const [clickedTypes, setClickedTypes] = useState(types);
 
   const isPokemonType = (type) => {
-    return pokemon.types.some(pokemonType => pokemonType.type.name === type);
+    return pokemon.types.some((pokemonType) => pokemonType.type.name === type);
   };
 
-  const clickedAllCorrect = (tmpTypes) =>  {
-    return Object.keys(tmpTypes).filter(type => isClicked(type) && isPokemonType(type)).length === pokemon.types.length;
-  }  
+  const clickedAllCorrect = (tmpTypes) => {
+    return (
+      Object.keys(tmpTypes).filter(
+        (type) => isClicked(type) && isPokemonType(type)
+      ).length === pokemon.types.length
+    );
+  };
   const handleClick = (type) => {
-    const tmpTypes = {...clickedTypes};
+    const tmpTypes = { ...clickedTypes };
     tmpTypes[type].isClicked = true;
-    isPokemonType(type) ? tmpTypes[type].isCorrect = true : setMistakes(mistakes => mistakes + 1);
+    isPokemonType(type)
+      ? (tmpTypes[type].isCorrect = true)
+      : setMistakes((mistakes) => mistakes + 1);
     tmpTypes[type].isCorrect = isPokemonType(type);
-    if(clickedAllCorrect(tmpTypes)) {
-      Object.keys(tmpTypes).forEach(type => {
+    if (clickedAllCorrect(tmpTypes)) {
+      Object.keys(tmpTypes).forEach((type) => {
         tmpTypes[type].isClicked = true;
-      }
-      );
+      });
     }
     setClickedTypes(tmpTypes);
   };
@@ -33,7 +38,6 @@ const Types = ({types, pokemon, setMistakes}) => {
     return clickedTypes[type].isCorrect;
   };
 
-
   return (
     <Flex
       direction="row"
@@ -43,13 +47,13 @@ const Types = ({types, pokemon, setMistakes}) => {
     >
       {Object.keys(clickedTypes).map((type) => (
         <Button
-          minW={{base: "30%", md:"20%"}}
+          minW={{ base: "30%", md: "20%" }}
           cursor={isClicked(type) ? "initial" : "pointer"}
           m={5}
           colorScheme={
             isClicked(type) ? (isCorrect(type) ? "green" : "red") : "teal"
           }
-          onClick={isClicked(type) ? null : () => handleClick(type) }
+          onClick={isClicked(type) ? null : () => handleClick(type)}
           key={type}
         >
           {type}
@@ -59,12 +63,11 @@ const Types = ({types, pokemon, setMistakes}) => {
   );
 };
 
-
-const Game = ({pokemon, types}) => {
+const Game = ({ pokemon, types }) => {
   const [mistakes, setMistakes] = useState(0);
   const typesToDict = (types) => {
     return types.reduce((acc, type) => {
-      acc[type.name] = {isClicked: false, isCorrect: false};
+      acc[type.name] = { isClicked: false, isCorrect: false };
       return acc;
     }, {});
   };
@@ -73,7 +76,11 @@ const Game = ({pokemon, types}) => {
     <>
       <Text align="center">Mistakes: {mistakes}</Text>
       <Pokemon pokemon={pokemon} />
-      <Types types={typesToDict(types)} pokemon={pokemon} setMistakes={setMistakes}/>
+      <Types
+        types={typesToDict(types)}
+        pokemon={pokemon}
+        setMistakes={setMistakes}
+      />
     </>
   );
 };
