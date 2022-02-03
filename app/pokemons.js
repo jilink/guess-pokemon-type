@@ -12,4 +12,4 @@ const getAllPokemonTypes = () => {
 
 }
 
-export { getRandomPokemon };
+export { getRandomPokemon, getAllPokemonTypes };
