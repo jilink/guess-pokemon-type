@@ -43,7 +43,7 @@ const Types = ({types, pokemon, setMistakes}) => {
     >
       {Object.keys(clickedTypes).map((type) => (
         <Button
-          minW="20vw"
+          minW={{base: "30%", md:"20%"}}
           cursor={isClicked(type) ? "initial" : "pointer"}
           m={5}
           colorScheme={
