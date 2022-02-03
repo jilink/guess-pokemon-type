@@ -6,4 +6,10 @@ const getRandomPokemon = () => {
     .then(response => response.json())
 }
 
+const getAllPokemonTypes = () => {
+  return fetch(`https://pokeapi.co/api/v2/type`)
+    .then(response => response.json())
+
+}
+
 export { getRandomPokemon };
