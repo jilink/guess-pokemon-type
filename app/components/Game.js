@@ -76,6 +76,11 @@ const Game = ({ pokemon, types }) => {
     <>
       <Text align="center">Mistakes: {mistakes}</Text>
       <Pokemon pokemon={pokemon} />
+      <form style={{ textAlign: "center" }}>
+        <Button type="submit" colorScheme="blue">
+          Next
+        </Button>
+      </form>
       <Types
         types={typesToDict(types)}
         pokemon={pokemon}
